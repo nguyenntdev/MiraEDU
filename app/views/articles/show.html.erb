@@ -1,96 +1,55 @@
+<div class="neat-article-container">
+  <div class="row large-8 columns align-center">
+    <div class="neat-article-header">
+      <div class="article-header-avatar">
+        <img class="header-avatar" src="https://i.imgur.com/3AeQRbR.jpg">
+      </div>
+      <div class="article-header-author">
+        <p class="author-name">
+          Harry Manchanda
+        </p>
+        <p class="author-description">
+          Front End Developer crawling his way to Full Stack Development. Team Member @ZURB/Yetinauts!
+        </p>
+        <p class="article-date-read">27 April, 2017 - 5 min read</p>
+      </div>
+    </div>
+    <div class="neat-article-title">
+      <h3 class="article-title"><strong><%= @article.title %></strong></h3>
+    </div>
+  </div>
+  <div class="neat-article-image">
+    <img class="article-image" src="https://i.imgur.com/0buQ75a.jpg" alt="Space">
+  </div>
+  <div class="row neat-article-content">
+    <div class="small-2 large-2 columns" data-sticky-container>
+      <div class="sticky article-social" data-sticky data-anchor="sticky1" data-sticky-on="small">
+        <div class="rounded-social-buttons">
+          <a class="social-button facebook" href="#"></a>
+          <a class="social-button twitter" href="#"></a>
+          <a class="social-button google-plus" href="#"></a>
+        </div>
+      </div>
+    </div>
+    <div class="small-10 large-8 columns" id="sticky1">
+      <div class="article-content">
+        <p><%= raw @article.description %></p>
+         </div>
+    </div>
+  </div>
+</div>
+<!--
+<div class="column row" id="content">
 <div class="container">
-  <div class="jumbotron center">
-    <h1> <%= @article.title %> </h1>
-    <hr>
-    <!-- Add the average out of total rating pluralise here. --> 
-    <p>
-      <strong>Average Rating:</strong>
-      <div class="rated" data-score="<%= @article.average_rating %>"></div>
-      <br>
-      ( &nbsp 
-      <%= pluralize(@article.total_rating.to_f, "customer review") %> 
-      &nbsp ) 
-    </p> 
-    <quote>
-      <strong> <%= @article.description %> </strong>
-    </quote>
-    <hr>
-    <h3>
-      By 
-      <strong>
-        <%= @article.author %>
-      </strong>
-    </h3>
-    <%= @article.updated_at.strftime("%d %B %Y") %>
-  </div>  
-
-  
-  <div class="row">
-    <div class="col-md-12">
-
-      <div class="img-container">    
-        <%= image_tag(@article.image_url, class: "img-responsive") %>
-      </div>
-    </div>
-  </div>
-  <hr>
-
-  <article> <%= @article.text %> </article>
-  <hr>
-  <p>
-    First posted by 
-    <strong><%= @article.author %></strong>
-    on 
-    <strong><%= @article.created_at.strftime("%d %b %Y") %></strong> 
-    at 
-    <strong><%= @article.created_at.strftime("%H:%M") %></strong>.
-  </p>
-  <p>
-    Last updated on 
-    <strong><%= @article.updated_at.strftime("%d %b %Y") %></strong>
-    at 
-    <strong><%= @article.updated_at.strftime("%H:%M") %></strong>.
-  </p>
-  <hr>
-
-  <div class="center">  
-    <%= link_to 'Edit', edit_article_path(@article), class: "btn btn-primary" %> |
-    <%= link_to 'Back', articles_path, class: "btn btn-info"  %>   
-  </div> 
-  <hr>
-
-  <div class="container">
-
-    <h2>Comments</h2>
-
-    <!-- Raty average rating here for overall-->
-    <p>
-      Average Rating: 
-      <div class="rated" data-score="<%= @article.average_rating %>">
-      </div>
-    </p>
-
-    <div class="page_info">
-      <%= page_entries_info @comments %>
-    </div>
-
-    <%= will_paginate @comments %>  
-
-    <%= render @comments %>
-
-    <%= will_paginate @comments%>
-  
-  </div>
-  
-  <%= render 'comments/form' %>  
-
-  <hr>
-  <div class="center">  
-    <%= link_to 'Edit', edit_article_path(@article), class: "btn btn-primary" %>   |   
-    <%= link_to 'Back', articles_path, class: "btn btn-info"  %>   
-  </div> 
-  <hr>
-
-</div> 
-
- 
+	<h4 class="text-center">Showing selected article</h4>
+	<div class="well well-lg col-xs-offset-3 col-xs-6">
+	<h4><strong><%#= @article.title %></strong></h4>
+	<p><%#= raw @article.description %></p>
+	<%#=link_to "View all articles" ,articles_path ,class:"btn btn-xs btn-success"%>
+	<%# if loged_in? && (current_user == @article.user || current_user.admin?) %>
+	<%#= link_to "Edit this artcle",edit_article_path(@article), class:"btn btn-xs btn-primary" %>
+	<%#= link_to "Delete this artcle",article_path(@article), method: :delete,data: { confirm: "Are you shure you want to delete?" },class: "btn btn-xs btn-danger" %>
+	<%# end %>
+</div>
+</div>
+-->

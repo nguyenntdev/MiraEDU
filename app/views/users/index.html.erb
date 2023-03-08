@@ -1,37 +1,47 @@
-<div class="container">
-  <h1>Listing Users</h1>
-
-  <table>
-    <thead>
-      <tr>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Author</th>
-        <th>Moderator</th>
-        <th>Editor</th>
-        <th>Admin</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @users.each do |user| %>
-        <tr>
-          <td><%= user.first_name %></td>
-          <td><%= user.last_name %></td>
-          <td><%= user.author %></td>
-          <td><%= user.moderator %></td>
-          <td><%= user.editor %></td>
-          <td><%= user.admin %></td>
-          <td><%= link_to 'Show', user %></td>
-          <td><%= link_to 'Edit', edit_user_path(user) %></td>
-          <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <br>
-
-  <%= link_to 'New User', new_user_path %>
+<% @users.each do |user|%>
+<div class="about-the-author">
+  <h3 class="author-title">About the Author</h3>
+  <div class="row">
+    <div class="small-12 medium-4 columns">
+      <div class="author-image">
+      	<%#= link_to gravatar_for(user), user_path(user)%>
+      </div>
+      <div class="author-social">
+        <a href="#">
+          <span class="fa-stack fa-lg facebook">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+          </span>
+        </a>
+        <a href="#">
+          <span class="fa-stack fa-lg twitter">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+          </span>
+        </a>
+        <a href="#">
+          <span class="fa-stack fa-lg linkedin">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+          </span>
+        </a>
+      </div>
+    </div>
+    <div class="small-12 medium-8 columns">
+      <h4 class="separator-left"><%= link_to user.username, user_path(user)%></h4>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores eum, iusto vel repudiandae, quaerat soluta sequi officia. Blanditiis atque, illo eaque sint in architecto illum nostrum repudiandae labore tenetur! Eaque impedit pariatur odio ad ipsum qui aspernatur dolorem consequuntur a molestias nisi, quae voluptatem expedita, inventore voluptatibus dolores, veritatis corporis facilis laudantium explicabo vero! Non hic quia facilis blanditiis eum.</p>    
+    <span class="badge"><%= pluralize(user.articles.count , "article") if user.articles %></span></li>
+	  <% if loged_in? and current_user.admin? %>
+			<li<%= link_to "Delete this user", user_path(user) ,method: :delete, data: {confirm: "Do you Want to Delete this user?"} %></li>
+	 <% end %>
+	
+    </div>
+     
+  </div>
 </div>
+<hr>
+<% end -%>
+<div class="text-center">
+<%= will_paginate @user,renderer: FoundationPagination::Rails%>	
+</div>
+

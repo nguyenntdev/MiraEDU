@@ -1,39 +1,17 @@
-  <div class="container">
-  <p>
-    <strong>First name:</strong>
-    <%= @user.first_name %>
-  </p>
 
-  <p>
-    <strong>Last name:</strong>
-    <%= @user.last_name %>
-  </p>
-
-  <p>
-    <strong>Email:</strong>
-    <%= @user.email %>
-  </p>
-
-  <p>
-    <strong>Author:</strong>
-    <%= @user.author %>
-  </p>
-
-  <p>
-    <strong>Moderator:</strong>
-    <%= @user.moderator %>
-  </p>
-
-  <p>
-    <strong>Editor:</strong>
-    <%= @user.editor %>
-  </p>
-
-  <p>
-    <strong>Admin:</strong>
-    <%= @user.admin %>
-  </p>
-
-  <%= link_to 'Edit', edit_user_path(@user) %> |
-  <%= link_to 'Back', users_path %>
+<h1 class="text-center"> Welcome to <%= @user.username %>'s profile</h1>
+<div class="row">
+	<div class="col-md-offset-4 col-md-3 text-center">
+		<div class="well">
+		<li><%= gravatar_for(@user) %></li>
+		<h3 class="text-center"> Articles of <%= @user.username %></h3>
+		</div>
+	</div>
 </div>
+
+<%= render 'articles/article',obj: @user_articles %>
+<div class="text-center">
+<%= will_paginate @user_articles,renderer: FoundationPagination::Rails%>	
+</div>
+
+

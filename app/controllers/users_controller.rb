@@ -1,76 +1,70 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_user!, :except => [:show, :index]
-  load_and_authorize_resource
+	before_action :require_own_user, only: [:edit, :update, :destroy]
+	before_action :require_admin, only: [:destroy]
 
-  # GET /users
-  # GET /users.json
-  def index
-    @users = User.all
-  end
+	def new
+		@user = User.new
+	end
 
-  # GET /users/1
-  # GET /users/1.json
-  def show
-  end
+	def index
+		@users = User.paginate(page: params[:page], per_page: 3)
+	end
+	def create
+		@user = User.new(user_params)
+		if @user.save
+			session[:user_id]= @user.id
+			flash[:success] = "Welcome to the alpha blog #{@user.username}"
+			redirect_to user_path(@user)
+		else
+			render 'new'
+		end
+	end
 
-  # GET /users/new
-  def new
-    @user = User.new
-  end
+	def edit
+	end
 
-  # GET /users/1/edit
-  def edit
-  end
+	def update
+		if @user.update(user_params)
+			flash[:success] = "Account updated Succesfully"
+			redirect_to articles_path
+		else
+			render 'edit'
+		end
+	end
 
-  # POST /users
-  # POST /users.json
-  def create
-    @user = User.new(user_params)
+	def show
+		@user_articles = @user.articles.paginate(page: params[:page], per_page: 3)
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+	end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
-  def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+	def destroy
+		@user = User.find(params[:id])
+		@user.destroy
+		flash[:danger] = "Article and User destroy Succesfully"
+		redirect_to root_path
+	end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
-  def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+	private
+	def user_params
+		params.require(:user).permit(:username, :email, :password)
+	end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+	def set_user
+		@user = User.find(params[:id])
+	end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:first_name, :last_name, :author, :moderator, :admin, :editor)
-    end
+	def require_own_user
+		if current_user!= @user and !current_user.admin?
+			flash[:danger] = "Dont try to be Over-Smart"
+			redirect_to root_path			
+		end
+	end
+
+	def require_admin
+		if !current_user.admin and loged_in?
+			flash[:danger] = "Only admin can perform this action"
+			redirect_to root_path
+		end
+	end
 end

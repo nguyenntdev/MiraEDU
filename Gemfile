@@ -1,43 +1,43 @@
 source 'https://rubygems.org'
 
-ruby '2.2.3'
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+gem 'will_paginate-foundation'
+gem "font-awesome-rails"
+gem 'ckeditor'
+gem 'foundation-rails'
+gem 'will_paginate', '~>3.0.7'
+gem 'rails', '~> 5.0.3'
+gem 'puma', '~> 3.0'
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'coffee-rails', '~> 4.2'
 
-gem 'rails',        				'4.2.4'
-gem 'bcrypt',								'3.1.10' 
-gem 'bootstrap-sass', 			'3.3.5.1'
-gem 'sass-rails',   				'5.0.4'
-gem 'uglifier',     				'2.7.2'
-gem 'coffee-rails', 				'4.1.1'
-gem 'jquery-rails', 				'4.0.5'
-gem 'turbolinks',   				'2.5.3'
-gem 'jbuilder',     				'2.3.2'
-gem 'devise',               '3.5.6'
-gem 'cancancan',          '~> 1.10'
-gem 'will_paginate',     '~> 3.0.6'
-gem 'sdoc',         				'0.4.1', group: :doc
+gem 'jquery-rails'
+gem 'turbolinks', '~> 5'
+gem 'jbuilder', '~> 2.5'
+gem 'bcrypt', '~> 3.1.7'
 
-# Development Environment
-# => $ bundle install --without production
 group :development, :test do
-  gem 'sqlite3',     				'1.3.11'
-  gem 'byebug',      				'8.0.0'
-  gem 'web-console', 				'2.2.1'
-  gem 'spring',      				'1.4.0'
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'sqlite3'
+  gem 'byebug', platform: :mri
 end
 
-# Test Environment
-group :test do
-  gem 'minitest-reporters', '1.0.5'
-  gem 'mini_backtrace',     '0.1.3'
-  gem 'guard-minitest',     '2.3.1'
+group :development do
+  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem 'web-console', '>= 3.3.0'
+  gem 'listen', '~> 3.0.5'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
-# Production Environment
-#$ bundle install --without production
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 group :production do
-  gem 'pg',             		'0.18.3'
-  gem 'rails_12factor', 		'0.0.3'
-  gem 'puma',								'2.15.2'	
+	gem 'pg'
+	gem 'rails_12factor'
 end
-
-

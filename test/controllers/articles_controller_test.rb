@@ -1,49 +1,48 @@
 require 'test_helper'
 
-class ArticlesControllerTest < ActionController::TestCase
+class ArticlesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @article = articles(:one)
   end
 
   test "should get index" do
-    get :index
+    get articles_url
     assert_response :success
-    assert_not_nil assigns(:articles)
   end
 
   test "should get new" do
-    get :new
+    get new_article_url
     assert_response :success
   end
 
   test "should create article" do
     assert_difference('Article.count') do
-      post :create, article: { author: @article.author, description: @article.description, image_url: @article.image_url, text: @article.text, title: @article.title }
+      post articles_url, params: { article: {  } }
     end
 
-    assert_redirected_to article_path(assigns(:article))
+    assert_redirected_to article_url(Article.last)
   end
 
   test "should show article" do
-    get :show, id: @article
+    get article_url(@article)
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @article
+    get edit_article_url(@article)
     assert_response :success
   end
 
   test "should update article" do
-    patch :update, id: @article, article: { author: @article.author, description: @article.description, image_url: @article.image_url, text: @article.text, title: @article.title }
-    assert_redirected_to article_path(assigns(:article))
+    patch article_url(@article), params: { article: {  } }
+    assert_redirected_to article_url(@article)
   end
 
   test "should destroy article" do
     assert_difference('Article.count', -1) do
-      delete :destroy, id: @article
+      delete article_url(@article)
     end
 
-    assert_redirected_to articles_path
+    assert_redirected_to articles_url
   end
 end
